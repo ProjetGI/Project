@@ -6,5 +6,6 @@ from django.conf.urls import include,url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accueil/', include('Connexion.urls')),
+    path('qcm/', include('Qcm.urls')),
 
 ]
