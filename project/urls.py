@@ -7,5 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accueil/', include('Connexion.urls')),
     path('qcm/', include('Qcm.urls')),
-
+    path('cours/', include('Media.urls')),
 ]
