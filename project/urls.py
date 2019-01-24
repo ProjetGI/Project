@@ -8,4 +8,5 @@ urlpatterns = [
     path('accueil/', include('Connexion.urls')),
     path('qcm/', include('Qcm.urls')),
     path('cours/', include('Media.urls')),
+    path('forum/', include('Forum.urls')),
 ]
