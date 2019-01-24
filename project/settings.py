@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'Connexion',
     'Forum',
     'Media',
+    'Qcm',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
