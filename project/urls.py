@@ -16,5 +16,5 @@ urlpatterns = [
     #path cours
     path('qcm/', include('Qcm.urls')),
     path('cours/', include('Media.urls')),
-  
+    path('forum/', include('Forum.urls')),
 ]
