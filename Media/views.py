@@ -1,10 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 
 
 def cours(request):
-    return render(request,'Media/cours.html')
+    if request.user.username :
+        return render(request,'Media/cours.html')
+    else :
+        return redirect("/accueil/login/")
 
 def cours_page(request):
-    return render(request,'Media/cours_page.html')
+     if request.user.username :
+        return render(request,'Media/cours_page.html')
+     else : 
+        return redirect("/accueil/login/")
 

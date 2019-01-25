@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .loginform import ConnexionForm
 from django.http import HttpResponse,Http404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 
 
 def accueil(request):
@@ -29,14 +29,19 @@ def logIn(request):
         else:
             form=ConnexionForm()
             return render(request,'Connexion/templates/login.html',{'form': form,'error':error})
-    
-         
+
+           
 
 def view_dashboard(request):
      return render(request,'Base/UserBaseTemplate.html',locals())
     
 
-
+def deconnexion(request):
+    if request.user :
+         logout(request)
+         return redirect("/accueil/login/")
+    else :
+        return redirect("/accueil/login/")
 
 
 
