@@ -10,6 +10,26 @@
     margin:50px 0px 7px -14px;
 }
 
+.return-button-add{
+    margin:50px 0px 7px 8%;
+}
+
 .cours-visualisation{
     display:none
+}
+
+.video-visualisation{
+    display:none
+}
+
+.corrige-visualisation{
+    display:none
+}
+
+span.bb-title{
+    margin-right:10px;
+}
+
+.add-form-container{
+    margin:auto;
 }

@@ -27,54 +27,19 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="title-table">Articulations concordantes</td>
-                  <td>La biométrie est l’étude des
-                    possibilités fonctionnelles des
-                    articulations du corps humain, en
-                    mesurant leurs différentes amplitudes...</td>
-                  <td>Cardiologie</td>
-                  <td>Malika Addou</td>
-                  <td>
-                    <button type="button" class="mb-2 btn btn-success mr-2">Accéder au cours</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="title-table">Articulations concordantes</td>
-                  <td>La biométrie est l’étude des
-                    possibilités fonctionnelles des
-                    articulations du corps humain, en
-                    mesurant leurs différentes amplitudes...</td>
-                  <td>Cardiologie</td>
-                  <td>Malika Addou</td>
-                  <td>
-                    <button type="button" class="mb-2 btn btn-success mr-2">Accéder au cours</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="title-table">Articulations concordantes</td>
-                  <td>La biométrie est l’étude des
-                    possibilités fonctionnelles des
-                    articulations du corps humain, en
-                    mesurant leurs différentes amplitudes...</td>
-                  <td>Cardiologie</td>
-                  <td>Malika Addou</td>
-                  <td>
-                    <button type="button" class="mb-2 btn btn-success mr-2">Accéder au cours</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="title-table">Articulations concordantes</td>
-                  <td>La biométrie est l’étude des
-                    possibilités fonctionnelles des
-                    articulations du corps humain, en
-                    mesurant leurs différentes amplitudes...</td>
-                  <td>Cardiologie</td>
-                  <td>Malika Addou</td>
-                  <td>
-                    <button type="button" class="mb-2 btn btn-success mr-2">Accéder au cours</button>
-                  </td>
-                </tr>
+
+                {% for cours in cours_list %}
+                  <tr>
+                    <td class="title-table">{{ cours.title }}</td>
+                    <td class="cours-description">{{ cours.description }}</td>
+                    <td>{{ cours.category }}</td>
+                    <td>{{ cours.author }}</td>
+                    <td>
+                      <a href="/cours/{{ cours.id }}/"><button type="button" class="mb-2 btn btn-success mr-2">Accéder au cours</button></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+
               </tbody>
             </table>
           </div>
@@ -87,3 +52,12 @@
   </div>
 
 {% endblock %}
+
+
+{% block custom-scripts %}
+<script>
+    $(".cours-description").text(function(index, currentText) {
+      return currentText.substr(0, 110)+"...";
+  });
+</script>
+{% endblock custom-scripts %}

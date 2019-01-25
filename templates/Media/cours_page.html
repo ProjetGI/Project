@@ -1,14 +1,16 @@
 {% extends './../Base/UserBaseTemplate.html' %}
 
+
 {% block content %}
 
 {% load static %}
+
 
 <div class="main-content-container container-fluid px-4">
     <!-- Page Header -->
     <div class="return-button">
       <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-        <a class="btn btn-sm btn-white" href="#">
+        <a class="btn btn-sm btn-white" href="{{ object.get_absolute_url }}/cours/">
           <i class="fas fa-reply"></i> Retourner vers la liste des cours</a>
       </div>
     </div>
@@ -17,38 +19,74 @@
     <div class="col-lg-14">
       <div class="card card-small card-post mb-4">
         <div class="card-body">
-          <h4 class="card-title">Titre de cours goes here</h4>
-          <p class="card-text text-muted"> In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer...
-            In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer...
-            In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer...
-            In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer...
-            In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer...
-          </p>
-
-          <object class="cours-visualisation" data="{% static 'pdfs/test.pdf' %}" type="application/pdf" width="97%" height="700px" align="right"> 
-                  <p>It appears you don't have a PDF plugin for this browser.
-                   No biggie... you can <a href="{% static 'pdfs/test.pdf' %}">click here to
-                  download the PDF file.</a></p>  
+          <h4 class="card-title">{{ cours.title }}</h4>
+          <p class="card-text text-muted">{{ cours.description }}</p>                  
           </object>
                 
         </div>
         <div class="card-footer border-top d-flex">
           <div class="card-post__author d-flex">
             <div class="d-flex flex-column justify-content-center ml-3">
-              <span class="card-post__author-name">Publié par James Khan</span>
-              <small class="text-muted">Professeur en médecine générale</small>
+              <span class="card-post__author-name">Publié par {{cours.author}}</span>
+              <small class="text-muted">Dans la catégorie : {{cours.category}}</small>
             </div>
           </div>
           <div class="my-auto ml-auto">
             
+            <span class="bb-title" style="margin-right:10px">Le support PDF</span> 
+            <button id="visualiser" type="button" class="mb-2 btn btn-info mr-2">Visualiser</button>
+            <a href="{{cours.support_pdf.url}}" download><button type="button" class="mb-2 btn btn-success mr-2">Télécharger</button></a>
+            
 
-            <button id="visualiser" type="button" class="mb-2 btn btn-info mr-2">Visualiser le cours</button>
-            <a href="{% static 'pdfs/test.pdf' %}" download><button type="button" class="mb-2 btn btn-success mr-2">Télécharger le cours</button></a>
-            <a href=""><button type="button" class="mb-2 btn btn-warning mr-2">Télécharger la vidéo</button></a>
+          </div>
+
+        </div>
+
+        {% if cours.hasVideo %}
+        <div class="card-footer border-top d-flex">
+          <div class="my-auto ml-auto">
+            <span class="bb-title" style="margin-right:10px">Le support Video</span> 
+            
+            <button id="visualiser-video" type="button" class="mb-2 btn btn-info mr-2">Visualiser</button>
+            <a href="{{cours.video_src.url}}" download><button type="button" class="mb-2 btn btn-success mr-2">Télécharger</button></a>           
+            
           </div>
         </div>
+        {% endif %}
+
       </div>
     </div>
+
+    
+
+
+    <div class="col-lg-14 cours-visualisation">
+      <div class="card card-small card-post mb-4">
+        <div class="card-body">
+          <h4 class="card-title">Le support PDF</h4>
+          <object class="cours-visualisation" data="{{cours.support_pdf.url}}" type="application/pdf" width="100%" height="700px" align="right"></object>
+                
+        </div>
+
+      </div>
+    </div>
+
+    {% if cours.hasVideo %}
+    <div class="col-lg-14 video-visualisation">
+        <div class="card card-small card-post mb-4">
+          <div class="card-body">
+            <h4 class="card-title">Le support Video</h4>
+            <center> <video width="90%" controls>
+                <source src="{{cours.video_src.url}}" type="video/mp4" style="align-items: center">
+              </video>   
+            </center>  
+          </div>
+  
+        </div>
+      </div>
+    {% endif %}
+
+
     <!-- End Default Light Table -->
     <!-- Default Dark Table -->
     <!-- End Default Dark Table -->
@@ -62,5 +100,14 @@
     $( '#visualiser' ).click(function() {
       $(".cours-visualisation").toggle();
     });
+
+    $( '#visualiser-video' ).click(function() {
+      $(".video-visualisation").toggle();
+    });
+
+
+    $(".btn-custom").text(function(index, currentText) {
+      return currentText.substr(0, 25);
+  });
 </script>
 {% endblock custom-scripts %}

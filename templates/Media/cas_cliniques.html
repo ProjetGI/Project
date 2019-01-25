@@ -1,0 +1,63 @@
+{% extends './../Base/UserBaseTemplate.html' %}
+
+{% block content %}
+
+<div class="main-content-container container-fluid px-4">
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4">
+      <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <span class="text-uppercase page-subtitle">Overview</span>
+        <h3 class="page-title">Liste des cas cliniques</h3>
+      </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Default Light Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card card-small mb-4">
+          <div class="card-body p-0 pb-3 ">
+            <table class="table mb-0" width="100%">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="border-0 title-table">Titre</th>
+                  <th scope="col" class="border-0 description-table">Description</th>
+                  <th scope="col" class="border-0">Catégorie</th>
+                  <th scope="col" class="border-0">Publié par</th>
+                  <th scope="col" class="border-0">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for cours in cours_list %}
+                  <tr>
+                    <td class="title-table">{{ cours.title }}</td>
+                    <td class="cours-description">{{ cours.description }}</td>
+                    <td>{{ cours.category }}</td>
+                    <td>{{ cours.author }}</td>
+                    <td>
+                      <a href="/cours/cas-cliniques/{{ cours.id }}/"><button type="button" class="mb-2 btn btn-success mr-2">Accéder au cas clinique</button></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Default Light Table -->
+    <!-- Default Dark Table -->
+    <!-- End Default Dark Table -->
+  </div>
+
+{% endblock %}
+
+
+{% block custom-scripts %}
+<script>
+    $(".cours-description").text(function(index, currentText) {
+      return currentText.substr(0, 110)+"...";
+  });
+</script>
+{% endblock custom-scripts %}
