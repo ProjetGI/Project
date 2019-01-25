@@ -1,6 +1,5 @@
 {% extends './../Base/UserBaseTemplate.html' %}
 
-
 {% block content %}
 
 {% load static %}
@@ -10,8 +9,8 @@
     <!-- Page Header -->
     <div class="return-button">
       <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-        <a class="btn btn-sm btn-white" href="{{ object.get_absolute_url }}/cours/">
-          <i class="fas fa-reply"></i> Retourner vers la liste des cours</a>
+        <a class="btn btn-sm btn-white" href="{{ object.get_absolute_url }}/cours/cas-cliniques/">
+          <i class="fas fa-reply"></i> Retourner vers la liste des cas cliniques</a>
       </div>
     </div>
     <!-- End Page Header -->
@@ -33,13 +32,23 @@
           </div>
           <div class="my-auto ml-auto">
             
-            <span class="bb-title" style="margin-right:10px">Le support PDF</span> 
+            <span class="bb-title" style="margin-right:10px">Cas clinique PDF</span> 
             <button id="visualiser" type="button" class="mb-2 btn btn-info mr-2">Visualiser</button>
             <a href="{{cours.support_pdf.url}}" download><button type="button" class="mb-2 btn btn-success mr-2">Télécharger</button></a>
             
 
           </div>
 
+        </div>
+
+        <div class="card-footer border-top d-flex">
+            <div class="my-auto ml-auto">
+              <span class="bb-title" style="margin-right:10px">Le corrigé en PDF</span> 
+              
+              <button id="visualiser-corrige" type="button" class="mb-2 btn btn-info mr-2">Visualiser</button>
+              <a href="{{cours.corrige_src.url}}" download><button type="button" class="mb-2 btn btn-success mr-2">Télécharger</button></a>           
+              
+            </div>
         </div>
 
         {% if cours.hasVideo %}
@@ -70,6 +79,18 @@
 
       </div>
     </div>
+
+
+    <div class="col-lg-14 corrige-visualisation">
+        <div class="card card-small card-post mb-4">
+          <div class="card-body">
+            <h4 class="card-title">Le corrigé en PDF</h4>
+            <object class="corrige-visualisation" data="{{cours.corrige_src.url}}" type="application/pdf" width="100%" height="700px" align="right"></object>
+                  
+          </div>
+  
+        </div>
+      </div>
 
     {% if cours.hasVideo %}
     <div class="col-lg-14 video-visualisation">
@@ -103,6 +124,10 @@
 
     $( '#visualiser-video' ).click(function() {
       $(".video-visualisation").toggle();
+    });
+
+    $( '#visualiser-corrige' ).click(function() {
+      $(".corrige-visualisation").toggle();
     });
 
 
