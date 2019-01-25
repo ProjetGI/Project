@@ -3,9 +3,9 @@ from django.http import HttpResponse
 
 
 def cours(request):
-    if request.user.username :
-        return render(request,'Media/cours.html')
-    else :
+   if request.user.username :
+        return render(request,'Media/cours.html',locals())
+   else :
         return redirect("/accueil/login/")
 
 def cours_page(request):
