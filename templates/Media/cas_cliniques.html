@@ -7,7 +7,7 @@
     <div class="page-header row no-gutters py-4">
       <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
         <span class="text-uppercase page-subtitle">Overview</span>
-        <h3 class="page-title">Liste des cours</h3>
+        <h3 class="page-title">Liste des cas cliniques</h3>
       </div>
     </div>
     <!-- End Page Header -->
@@ -35,7 +35,7 @@
                     <td>{{ cours.category }}</td>
                     <td>{{ cours.author }}</td>
                     <td>
-                      <a href="/cours/{{ cours.id }}/"><button type="button" class="mb-2 btn btn-success mr-2">Accéder au cours</button></a>
+                      <a href="/cours/cas-cliniques/{{ cours.id }}/"><button type="button" class="mb-2 btn btn-success mr-2">Accéder au cas clinique</button></a>
                     </td>
                   </tr>
                 {% endfor %}
