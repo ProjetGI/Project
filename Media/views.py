@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.urls import reverse
 
@@ -12,33 +12,45 @@ from Connexion.models import stagiare
 
 
 def cours(request):
-    cours_list = Cours.objects.all()
-    context = {'cours_list': cours_list}
-    return render(request, 'Media/cours.html',context)
+   if request.user.username :
+        cours_list = Cours.objects.all()
+        context = {'cours_list': cours_list}
+        return render(request,'Media/cours.html',context)
+   else :
+        return redirect("/accueil/login/")
 
-
-def cours_page(request,cours_id):
-    cours = Cours.objects.get(id=cours_id)
-    context = {'cours':cours}
-    return render(request, 'Media/cours_page.html',context)
+def cours_page(request):
+     if request.user.username :
+         cours = Cours.objects.get(id=cours_id)
+         context = {'cours':cours}
+         return render(request, 'Media/cours_page.html',context)
+     else : 
+        return redirect("/accueil/login/")
 
 def cas_cliniques(request):
-    cas_cliniques_list = CasCliniques.objects.all()
-    context = {'cours_list': cas_cliniques_list}
-    return render(request, 'Media/cas_cliniques.html',context)
-
+   if request.user.username :
+         cas_cliniques_list = CasCliniques.objects.all()
+         context = {'cours_list': cas_cliniques_list}
+         return render(request, 'Media/cas_cliniques.html',context)
+   else : 
+        return redirect("/accueil/login/")
 
 def cas_clinique_page(request,cas_clinique_id):
-    cas_clinique = CasCliniques.objects.get(id=cas_clinique_id)
-    context = {'cours':cas_clinique}
-    return render(request, 'Media/cas_clinique_page.html',context)
+   if request.user.username :
+         cas_clinique = CasCliniques.objects.get(id=cas_clinique_id)
+         context = {'cours':cas_clinique}
+         return render(request, 'Media/cas_clinique_page.html',context)
+   else : 
+        return redirect("/accueil/login/")
+        
 
 class CoursCreateView(CreateView):
     model= Cours
     fields = ['title','description','category','support_pdf','video_src']
-
-    def get_success_url(self):
-        return reverse('cours-page', kwargs={'cours_id' : self.object.pk})
+   
+def get_success_url(self):
+            return reverse('cours-page', kwargs={'cours_id' : self.object.pk})
+        
 
 class CasCliniquesCreateView(CreateView):
     model= CasCliniques
