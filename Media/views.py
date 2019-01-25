@@ -8,11 +8,14 @@ from django.views.generic import CreateView
 from .models import Cours
 from .models import CasCliniques
 
+from Connexion.models import stagiare
+
 
 def cours(request):
     cours_list = Cours.objects.all()
     context = {'cours_list': cours_list}
     return render(request, 'Media/cours.html',context)
+
 
 def cours_page(request,cours_id):
     cours = Cours.objects.get(id=cours_id)
@@ -43,3 +46,13 @@ class CasCliniquesCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('cas-clinique-page', kwargs={'cas_clinique_id' : self.object.pk})
+
+
+
+def removeCours(request,cours_id):
+    Cours.objects.filter(id=cours_id).delete()
+    return cours(request)
+
+def removeCasCliniques(request,cours_id):
+    CasCliniques.objects.filter(id=cours_id).delete()
+    return cas_cliniques(request)

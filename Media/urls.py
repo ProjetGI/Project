@@ -9,4 +9,7 @@ urlpatterns = [
     path('cas-cliniques/<int:cas_clinique_id>/', views.cas_clinique_page, name='cas-clinique-page'),
     path('add/', views.CoursCreateView.as_view(), name='cours-add'),
     path('cas-cliniques/add/', views.CasCliniquesCreateView.as_view(), name='cas-clinique-add'),
+    path('delete/<int:cours_id>/', views.removeCours, name='cours-delete'),
+    path('cas-cliniques/delete/<int:cours_id>/', views.removeCasCliniques, name='cas-clinique-delete'),
+
 ]
