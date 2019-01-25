@@ -4,11 +4,17 @@
 
 <div class="main-content-container container-fluid px-4">
     <!-- Page Header -->
-    <div class="page-header row no-gutters py-4">
-      <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-        <span class="text-uppercase page-subtitle">Overview</span>
-        <h3 class="page-title">Liste des cas cliniques</h3>
+    <div class="page-header row no-gutters py-4 row">
+      <div class="col-8 text-center text-sm-left mb-0">
+        <h3 class="page-title">Liste des cas cliniques {{profil_type}}</h3>
       </div>
+
+      {% if profil_type == 'formateur'  %} 
+      <div class="col-4">
+        <a href="/cours/cas-cliniques/add/"><button type="button" class="mb-2 btn btn-warning mr-2 float-right"><i class="fas fa-plus-circle"></i> Ajouter un nouveau cas clinique</button></a>
+      </div>
+      {% endif %}
+
     </div>
     <!-- End Page Header -->
     <!-- Default Light Table -->
@@ -36,6 +42,10 @@
                     <td>{{ cours.author }}</td>
                     <td>
                       <a href="/cours/cas-cliniques/{{ cours.id }}/"><button type="button" class="mb-2 btn btn-success mr-2">Accéder au cas clinique</button></a>
+
+                      {% if profil_type == 'formateur'  %} 
+                      <a href="/cours/cas-cliniques/delete/{{ cours.id }}/"><button type="button" class="mb-2 btn btn-danger mr-2">Supprimer le cas clinique</button></a>
+                      {% endif %}
                     </td>
                   </tr>
                 {% endfor %}

@@ -85,11 +85,24 @@
 						Log In
 					</span>
 					{%  if error %}
+					
+					<div style="margin-bottom:70px;">
+							<h4><span  style="margin-bottom:70px" class="label label-danger">
+								 Veuillez vérifier votre username et votre mot de passe.
 
-					<p style="background-color:rgba(223, 164, 177, 0.623);margin-bottom:70px">
-						<font size="4">Veuillez vérifier votre username et votre mot de passe.
-					</p>
-
+							</span>
+							</h4>
+						
+						</div>
+					
+					{% endif %}
+					{% if signin == True %}
+							<div style="margin-bottom:70px;margin-left: -20px;">
+									<h4><span  style="margin-bottom:70px" class="label label-success">
+											Inscription rèussite, saisie votre coordonnés pour accéder aux cours.										</span>
+									</h4>
+								
+								</div>
 					{% endif %}
 					<div class="wrap-input100 validate-input" data-validate="Username or Email are required">
 						<span class="label-input100">Username or Email</span>

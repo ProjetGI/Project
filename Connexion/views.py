@@ -1,18 +1,18 @@
 from django.shortcuts import render,redirect
-from .loginform import ConnexionForm
+from .loginform import ConnexionFormLog,ConnexionFormSign
 from django.http import HttpResponse,Http404
 from django.contrib.auth import authenticate, login,logout
 from Connexion.models import administrateur,stagiare,formateur
-
+from django.contrib.auth.models import User
 
 def accueil(request):
     return render(request,'Connexion/templates/index.html',locals())
 
 def logIn(request):
-    profil='walo'
+    profil=''
     error=False
     if request.method == "POST":
-            form = ConnexionForm(request.POST)
+            form = ConnexionFormLog(request.POST)
             if form.is_valid():
                 username = form.cleaned_data["username"]
                 password = form.cleaned_data["password"]
@@ -42,8 +42,10 @@ def logIn(request):
                  error=True
                  return render(request,'Connexion/templates/login.html',{'form': form,'error':error})
     else:
-            form=ConnexionForm()
-            return render(request,'Connexion/templates/login.html',{'form': form,'error':error})
+            signin = request.session['signin']
+            request.session['signin']=False
+            form=ConnexionFormLog()
+            return render(request,'Connexion/templates/login.html',{'form': form,'error':error,'signin':signin})
 
            
 
@@ -60,7 +62,54 @@ def deconnexion(request):
 
 
 def signup(request):
-    return render(request,'Connexion/templates/signUp.html',locals())
+    error=False
+    if request.method == "POST":
+            form = ConnexionFormSign(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data["username"]
+                password = form.cleaned_data["password"]
+                re_password = form.cleaned_data["re_password"]
+                last_name = form.cleaned_data["last_name"]
+                faculte = form.cleaned_data["faculte"]
+                first_name = form.cleaned_data["first_name"]
+                email = form.cleaned_data["email"]
+                
+                if password == re_password :
+                    if len(password) <  8 :
+                        error=True
+                        text ="Utilisez un password plus long."
+                        return render(request,'Connexion/templates/signUp.html',{'form': form,'error':error,'error_text':text})
+
+                    if User.objects.filter(username=username) :
+                        error=True
+                        text ="Username déja utilisé."
+                        return render(request,'Connexion/templates/signUp.html',{'form': form,'error':error,'error_text':text})
+                    elif  User.objects.filter(email=email) :
+                        error=True
+                        text="Email déja utilisé"
+                        return render(request,'Connexion/templates/signUp.html',{'form': form,'error':error,'error_text':text})
+                    #other case to treat password ...
+                    else :
+                        user = User.objects.create_user(username,email, password)
+                        user.first_name = first_name
+                        user.last_name = last_name
+                        stagiare(user=user,faculte=faculte).save()
+                        request.session["signin"]=True
+                        return redirect("/accueil/login/")
+
+                else:
+                    error = True
+                    text = "La répitition du password n'est pas validé."
+                    return render(request,'Connexion/templates/signUp.html',{'form': form,'error':error,'error_text':text})
+            else:
+                  error = True
+                  text= "form is not valid"
+                  return render(request,'Connexion/templates/signUp.html',{'form': form,'error':error,'error_text':text})
+    else:
+            form=ConnexionFormSign()
+            return render(request,'Connexion/templates/signUp.html',{'form': form,'error':error})
+
+
 
 def about(request):
     return render(request,'Connexion/templates/about.html',locals())
