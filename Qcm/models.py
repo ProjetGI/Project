@@ -1,25 +1,21 @@
 from django.db import models
+from django.forms.widgets import CheckboxSelectMultiple
+
+from django.forms import ModelForm
 
 # Create your models here.
 
 class Qcm(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField()
-
-    def __str__(self):
-        return self.title
-
-class Question(models.Model):
-    qcmId = models.ForeignKey(Qcm, on_delete=models.CASCADE)
-    num =  models.AutoField(primary_key=True)
-    question = models.TextField()
-    choiceA = models.CharField(max_length=150)
-    choiceB = models.CharField(max_length=150)
-    choiceC = models.CharField(max_length=150,blank=True)
-    choiceD = models.CharField(max_length=150,blank=True)
-    answer = models.CharField(max_length=4)
+    dateCreated = models.DateField(editable=False, auto_now_add=True)
+    dateEdited = models.DateField((""), auto_now=True)
     
-
-
-    class Meta:
-        unique_together = (("qcmId", "num"),)
+class Question(models.Model):
+    id_qcm = models.ForeignKey(Qcm, on_delete="CASCADE")
+    question = models.TextField()
+   
+class Choice(models.Model):
+    id_question = models.ForeignKey(Question, on_delete="CASCADE")
+    choice = models.CharField(max_length=150)
+    answer = models.BooleanField()

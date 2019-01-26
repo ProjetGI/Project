@@ -7,8 +7,8 @@ class stagiare(models.Model):
     faculte = models.CharField(max_length=100,blank=False,null=False)
     
     def __str__(self):
-        
         return self.user.username
+        
 class administrateur(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)  # La liaison OneToOne vers le modèle User
    
