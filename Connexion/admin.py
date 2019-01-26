@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import administrateur,stagiare,formateur
-admin.site.register(administrateur)
-#admin.site.register(stagiare)
+
 admin.site.register(formateur)
 
 class StagiareAdmin(admin.ModelAdmin):
@@ -10,3 +9,10 @@ class StagiareAdmin(admin.ModelAdmin):
    
 
 admin.site.register(stagiare, StagiareAdmin)
+
+class AdministrateureAdmin(admin.ModelAdmin):
+   list_display   = ('id','user_id' )
+   list_filter    = ('id','user_id' )
+   
+
+admin.site.register(administrateur, AdministrateureAdmin)

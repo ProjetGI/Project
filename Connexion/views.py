@@ -37,24 +37,24 @@ def logIn(request):
                    # it's possible that  lost the request
                 else:
                         error = True
-                        return render(request,'Connexion/templates/login.html',{'form': form,'error':error})
+                        return render(request,'Connexion/templates/login.html',{'form': form,'error':error,'signin':False})
             else :
                  error=True
-                 return render(request,'Connexion/templates/login.html',{'form': form,'error':error})
-    else:
-            signin = request.session['signin']
-            request.session['signin']=False
-            form=ConnexionFormLog()
-            return render(request,'Connexion/templates/login.html',{'form': form,'error':error,'signin':signin})
+                 return render(request,'Connexion/templates/login.html',{'form': form,'error':error,'signin':False})
+    
+    else :
+        return render(request,'Connexion/templates/login.html',{'form':ConnexionFormLog(),'error':False,'signin':False})
 
-           
+def logInAfterSignIn(request,int)  :
+        return render(request,'Connexion/templates/login.html',{'form':ConnexionFormLog(),'error':False,'signin':True})   
+    
 
 def view_dashboard(request):
      return render(request,'Base/UserBaseTemplate.html',locals())
     
 
 def deconnexion(request):
-    if request.user :
+    if request.user.username :
          logout(request)
          return redirect("/accueil/login/")
     else :
@@ -94,8 +94,7 @@ def signup(request):
                         user.first_name = first_name
                         user.last_name = last_name
                         stagiare(user=user,faculte=faculte).save()
-                        request.session["signin"]=True
-                        return redirect("/accueil/login/")
+                        return redirect("/accueil/login/1")
 
                 else:
                     error = True

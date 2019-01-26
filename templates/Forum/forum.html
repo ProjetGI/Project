@@ -2,69 +2,90 @@
 
 {% block content %}
 
+<style type="text/css">
+table{
+  border: 1px solid black;
+}
+</style>
+
 <div class="main-content-container container-fluid px-4">
-  <!-- Page Header -->
-  <div class="page-header row no-gutters py-4">
-    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-      <span class="text-uppercase page-subtitle">Overview</span>
-      <h3 class="page-title">Data Tables</h3>
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4 row">
+      <div class="col-8 text-center text-sm-left mb-0">
+        <h3 class="page-title">Forum : Page principale</h3>
+      </div> 
+      
+
     </div>
-  </div>
-  <!-- End Page Header -->
-  <!-- Default Light Table -->
-  <div class="row">
-    <div class="col">
-      <div class="card card-small mb-4">
-        <div class="card-header border-bottom">
-          <h6 class="m-0">Active Users</h6>
-        </div>
-        <div class="card-body p-0 pb-3 text-center">
-          <table class="table mb-0">
-            <thead class="bg-light">
-              <tr>
-                <th scope="col" class="border-0">Titre</th>
-                <th scope="col" class="border-0">Description</th>
-                <th scope="col" class="border-0">Publié par</th>
-                <th scope="col" class="border-0">Accéder au cours</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Articulations concordantes</td>
-                <td>La biométrie est l’étude des
-                  possibilités fonctionnelles des
-                  articulations du corps humain, en
-                  mesurant leurs différentes amplitudes</td>
-                <td>Malika Addou</td>
-                <td>Buttons</td>
-              </tr>
-              <tr>
-                <td>Clark</td>
-                <td>Angela</td>
-                <td>Estonia</td>
-                <td>Borghetto di Vara</td>
-              </tr>
-              <tr>
-                <td>Jerry</td>
-                <td>Nathan</td>
-                <td>Cyprus</td>
-                <td>Braunau am Inn</td>
-              </tr>
-              <tr>
-                <td>Colt</td>
-                <td>Angela</td>
-                <td>Liberia</td>
-                <td>Bad Hersfeld</td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="col-4">
+        <a href="/forum/create/"><button type="button" class="mb-2 btn btn-primary btn-lg mr-2 float-none"><i class="fas fa-plus-circle"></i> Ajouter une nouvelle publication</button></a>
+    </div>
+    <!-- End Page Header -->
+    <!-- Default Light Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card card-small mb-4">
+          <div class="card-body p-0 pb-3 ">
+            <table class="table table-striped table-dark mb-0" width="100%">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="border-0 title-table" style="width:40%">Titre de la publication</th>
+                  <th scope="col" class="border-0 sujet-table" style="width:15%">Domaine</th>
+                  <th scope="col" class="border-0" style="width:10%">Publié par</th>
+                  <th scope="col" class="border-0" style="width:20%">Date de publication</th>
+                  <th scope="col" class="border-0" style="width:15%"></th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for obj in liste_publications %}
+                  <tr>
+                    <td class="title-table">{{ obj.titre }}</td>
+                    <td class="sujet-table">{{ obj.sujet }}</td>
+                    <td></td>  <!-- add user here -->
+                    <td>{{ obj.date_poste }}</td>
+                    <td>                   
+                      <a href="/forum/{{ obj.id }}/"><button type="button" class="mb-2 btn btn-success mr-2">Accéder a la publication</button></a>
+                      <a href="/forum/{{ obj.id }}/confirm_delete_pub"><button type="button" class="mb-2 btn btn-danger mr-2">Supprimer la publication</button></a> <!-- Add condition auteure here -->
+                    </td>
+                  </tr>
+                {% endfor %}
+
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
+    <!-- End Default Light Table -->
+    <!-- Default Dark Table -->
+    <!-- End Default Dark Table -->
   </div>
-  <!-- End Default Light Table -->
-  <!-- Default Dark Table -->
-  <!-- End Default Dark Table -->
-</div>
 
 {% endblock %}
+
+
+{% block custom-scripts %}
+<script>
+    $(".ttitle-table").text(function(index, currentText) {
+      return currentText.substr(0, 110)+"...";
+  });
+</script>
+{% endblock custom-scripts %}
+
+
+
+<!-- 
+{{ liste_publications }}
+
+{% for obj in liste_publications %}
+    <br/>
+    {{ obj.sujet }}<br/>
+    {{ obj.titre }}<br/>
+    {{ obj.redaction }}<br/>
+    {{ obj.nb_replies }}<br/>
+    {{ obj.date_poste }}<br/>
+    Publie il y a {{obj.date_poste|timesince }}
+    <br/>
+{% endfor %}
+ -->
