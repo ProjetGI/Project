@@ -32,6 +32,7 @@ table{
 	<ul class="list-group">
 	  <li class="list-group-item" style="font-weight: bold;color:black;font-size:30px">Titre de la publication : {{ object }}</li>
 	  <li class="list-group-item">Sujet : {{ object.sujet }}</li>
+	  <li class="list-group-item">Publié par : {{ user }}</li>
 	  <li class="list-group-item">Contenu : {{ object.redaction }}</li>
 	  <li class="list-group-item">Date de publication : {{ object.date_poste }}</li>
 	</ul>
@@ -42,6 +43,7 @@ table{
 	                <ul class="list-group">
 					  <!-- <li class="list-group-item">Reponse{{ obj.rep_publication }}</li> -->
 					  <li class="list-group-item" style="font-weight: bold;font-size:20px">Reponse : {{obj.reponse }}</li>
+					  <li class="list-group-item">Reponse de : {{ user }}</li>
 					  <li class="list-group-item">Date de reponse : {{ obj.date_reponse }}</li>
 					  <li class="list-group-item"><a href="/forum/reponse/{{ obj.id }}/confirm_delete_rep"><button type="button" class="mb-2 btn btn-danger mr-2">Supprimer la reponse</button></a></li>
 					</ul>

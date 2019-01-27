@@ -59,6 +59,7 @@ def reponse(request, pk=4):
 
 def forum(request):
     liste_publications = Publication.objects.all()
+    user = request.user
     context = {
     "liste_publications":liste_publications
     }
@@ -68,6 +69,7 @@ def forum(request):
 
 def publication(request, pk=4):
     obj = Publication.objects.get(pk=pk)
+    user = request.user
     liste_reponses = Reponse.objects.all().filter(rep_publication=pk)
     context = {
     "object":obj,

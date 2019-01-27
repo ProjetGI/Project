@@ -40,9 +40,9 @@ table{
 
                 {% for obj in liste_publications %}
                   <tr>
-                    <td class="title-table">{{ obj.titre }}</td>
+                    <td class="title-table">{{ obj.id }})- {{ obj.titre }}</td>
                     <td class="sujet-table">{{ obj.sujet }}</td>
-                    <td></td>  <!-- add user here -->
+                    <td>{{ user }}</td>  <!-- add user here -->
                     <td>{{ obj.date_poste }}</td>
                     <td>                   
                       <a href="/forum/{{ obj.id }}/"><button type="button" class="mb-2 btn btn-success mr-2">Accéder a la publication</button></a>
