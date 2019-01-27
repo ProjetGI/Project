@@ -6,3 +6,8 @@ class PublicationForm(forms.ModelForm):
 	class Meta:
 		model = Publication
 		fields = '__all__'
+
+class ReponseForm(forms.ModelForm):
+	class Meta:
+		model = Reponse
+		fields = '__all__'

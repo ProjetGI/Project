@@ -1,5 +1,49 @@
+{% extends './../Base/UserBaseTemplate.html' %}
+
+{% block content %}
+
+<style type="text/css">
+table{
+  border: 1px solid black;
+}
+</style>
+
+<div class="main-content-container container-fluid px-4">
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4 row">
+      <div class="col-8 text-center text-sm-left mb-0">
+        <h3 class="page-title">Publication : {{ object }}</h3>
+      </div> 
+      
+
+    </div>
+    <!-- End Page Header -->
+    <!-- Default Light Table -->
+    <div>
+    	
+	<form method="post">{% csrf_token %}
+	    <p>Are you sure you want to delete publication "{{ object }}"?</p>
+	    <input type="submit" value="Confirm">
+	</form>
+
+
+
+    </div>
+    <!-- End Default Light Table -->
+    <!-- Default Dark Table -->
+    <!-- End Default Dark Table -->
+  </div>
+
+{% endblock %}
+
+
+{% block custom-scripts %}
+
+{% endblock custom-scripts %}
+
+<!-- 
 <form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <p>Are you sure you want to delete publication "{{ object }}"?</p>
     <input type="submit" value="Confirm">
 </form>
-
+ -->

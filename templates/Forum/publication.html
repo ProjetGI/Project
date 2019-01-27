@@ -1,3 +1,87 @@
-{{ object }}<br/>
-publication <br/>
+{% extends './../Base/UserBaseTemplate.html' %}
+
+{% block content %}
+
+<style type="text/css">
+table{
+  border: 1px solid black;
+}
+</style>
+
+<div class="main-content-container container-fluid px-4">
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4 row">
+      <div class="col-8 text-center text-sm-left mb-0">
+        <h3 class="page-title">Publication : {{ object }}</h3>
+      </div> 
+      
+
+    </div>
+    <div class="col-4">
+        <a href="/forum/{{ object.id }}/confirm_delete_pub"><button type="button" class="mb-2 btn btn-danger mr-2">Supprimer la publication</button></a>
+		<br/>
+		<a href="/forum/reponse/create/"><button type="button" class="mb-2 btn btn-primary btn mr-2 float-none"><i class="fas fa-plus-circle"></i> Ajouter une nouvelle reponse</button></a>
+    </div>
+    <!-- End Page Header -->
+    <!-- Default Light Table -->
+    <div>
+	<!-- {{ object }}<br/>
+	{{ object.sujet }}<br/>
+	{{ object.redaction }}<br/>
+	{{ object.date_poste }}<br/> -->
+	<ul class="list-group">
+	  <li class="list-group-item" style="font-weight: bold;color:black;font-size:30px">Titre de la publication : {{ object }}</li>
+	  <li class="list-group-item">Sujet : {{ object.sujet }}</li>
+	  <li class="list-group-item">Contenu : {{ object.redaction }}</li>
+	  <li class="list-group-item">Date de publication : {{ object.date_poste }}</li>
+	</ul>
+	
+	<br/>
+
+	{% for obj in liste_reponses %}
+	                <ul class="list-group">
+					  <!-- <li class="list-group-item">Reponse{{ obj.rep_publication }}</li> -->
+					  <li class="list-group-item" style="font-weight: bold;font-size:20px">Reponse : {{obj.reponse }}</li>
+					  <li class="list-group-item">Date de reponse : {{ obj.date_reponse }}</li>
+					  <li class="list-group-item"><a href="/forum/reponse/{{ obj.id }}/confirm_delete_rep"><button type="button" class="mb-2 btn btn-danger mr-2">Supprimer la reponse</button></a></li>
+					</ul>
+					<br/>
+
+	                 <!-- {{ obj.rep_publication }}<br/>
+	                 {{ obj.reponse }}  <br/>
+	                 {{ obj.date_reponse }} <br/>
+	                 <a href="/forum/reponse/{{ obj.id }}/confirm_delete_rep"><button type="button" class="mb-2 btn btn-danger mr-2">Supprimer la reponse</button></a>
+	                 <br/> -->
+	                
+	                 
+   
+	{% endfor %}
+	</div>
+    <!-- End Default Light Table -->
+    <!-- Default Dark Table -->
+    <!-- End Default Dark Table -->
+  </div>
+
+{% endblock %}
+
+
+{% block custom-scripts %}
+
+{% endblock custom-scripts %}
+
+
+<!-- {{ object }}<br/>
+{{ object.sujet }}<br/>
+{{ object.redaction }}<br/>
 {{ object.date_poste }}<br/>
+<a href="/forum/{{ object.id }}/confirm_delete_pub"><button type="button" class="mb-2 btn btn-danger mr-2">Supprimer la publication</button></a>
+<br/>
+ <a href="/forum/reponse/create/"><button type="button" class="mb-2 btn btn-primary btn-lg mr-2 float-none"><i class="fas fa-plus-circle"></i> Ajouter une nouvelle reponse</button></a>
+<br/>
+{% for obj in liste_reponses %}
+                 {{ obj.rep_publication }}<br/>
+                 {{ obj.reponse }}  <br/>
+                 {{ obj.date_reponse }} <br/>
+                 <a href="/forum/reponse/{{ obj.id }}/confirm_delete_rep"><button type="button" class="mb-2 btn btn-danger mr-2">Supprimer la reponse</button></a>
+                 <br/>
+{% endfor %} -->
