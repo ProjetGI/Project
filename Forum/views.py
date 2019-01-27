@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import (
     ListView, DetailView,
     CreateView,DeleteView )
-from .forms import PublicationForm
+from .forms import PublicationForm, ReponseForm
 from .models import Publication, Reponse
 from django.urls import reverse_lazy
 
@@ -28,6 +28,27 @@ class PublicationDeleteView(DeleteView):
     #         "sujet"
     #     ]
 
+
+class ReponseCreateView(CreateView):
+    queryset = Reponse.objects.all()
+    form_class = ReponseForm
+    template_name = 'Forum/create_reponse.html'
+    success_url = reverse_lazy('forum')
+    # fields = [
+    #         "rep_publication",
+    #         "reponse"
+    #     ]
+
+class ReponseDeleteView(DeleteView):
+    model = Reponse
+    template_name = 'Forum/confirm_delete_rep.html'
+    success_url = reverse_lazy('forum')
+    # fields = [
+    #         "titre",
+    #         "sujet"
+    #     ]
+
+
 def reponse(request, pk=4):
     obj = Reponse.objects.get(pk=pk)
     context = {
@@ -47,8 +68,17 @@ def forum(request):
 
 def publication(request, pk=4):
     obj = Publication.objects.get(pk=pk)
+    liste_reponses = Reponse.objects.all().filter(rep_publication=pk)
     context = {
-    "object":obj
+    "object":obj,
+    "liste_reponses":liste_reponses
     }
     return render(request,'Forum/publication.html',context)
     # return render(request,'Forum/reponse.html')
+
+class Counter:
+    numReponse = 1
+
+    def increment(self):
+        self.numReponse += 1
+        return ''

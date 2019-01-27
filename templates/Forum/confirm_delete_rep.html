@@ -20,10 +20,9 @@ table{
     <!-- End Page Header -->
     <!-- Default Light Table -->
     <div>
-    	<form class="form" method="POST" action="">
-			{% csrf_token %}
-			{{ form.as_p }}
-		<input type="submit" name="publication">
+    	<form method="post">{% csrf_token %}
+		    <p>Are you sure you want to delete reponse "{{ object }}"?</p>
+		    <input type="submit" value="Confirm">
 		</form>
 
 
@@ -40,8 +39,10 @@ table{
 
 {% endblock custom-scripts %}
 
-<!-- <form class="form" method="POST" action="">
-	{% csrf_token %}
-	{{ form.as_p }}
-<input type="submit" name="publication">
-</form> -->
+<!-- 
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete reponse "{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+</form>
+
+ -->
