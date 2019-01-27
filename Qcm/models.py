@@ -11,11 +11,11 @@ class Qcm(models.Model):
     dateCreated = models.DateField(editable=False, auto_now_add=True)
     dateEdited = models.DateField((""), auto_now=True)
     
-class Question(models.Model):
+class Question(ModelForm):
     id_qcm = models.ForeignKey(Qcm, on_delete="CASCADE")
     question = models.TextField()
    
-class Choice(models.Model):
+class Choice(ModelForm):
     id_question = models.ForeignKey(Question, on_delete="CASCADE")
     choice = models.CharField(max_length=150)
     answer = models.BooleanField()

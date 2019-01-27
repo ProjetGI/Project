@@ -53,10 +53,10 @@ class CoursCreateView(CreateView):
     fields = ['title','description','category','support_pdf','video_src']
    
     def get_success_url(self):
-            self.object.author=self.request.user.username
-            self.object.save()
-            return reverse('cours-page', kwargs={'cours_id' : self.object.pk})
-        
+        self.object.author=self.request.user.username
+        self.object.save()
+        return reverse('cours-page', kwargs={'cours_id' : self.object.pk})
+       
 
 class CasCliniquesCreateView(CreateView):
     model= CasCliniques
