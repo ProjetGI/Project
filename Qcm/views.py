@@ -1,16 +1,30 @@
 from django.shortcuts import render
-from django.forms import modelformset_factory
-from django.views.generic.edit import CreateView
 
 from .models import Qcm
 from .models import Question
+from .forms import QcmModelForm
+from .forms import QuestionFormset
 
 # Create your views here.
 
 def add_qcm(request):
-    questionFormSet = modelformset_factory(Question, fields=('question','choice1','choice2'))
-    formset = questionFormSet()
-    return render(request, 'Qcm/add_qcm.html', {'formset': formset})
+    if request.method == 'GET':
+        qcmform = QcmModelForm(request.GET or None)
+        formset = QuestionFormset(queryset=Qcm.objects.none())
+    elif request.method =='POST':
+        qcmform = QcmModelForm(request.POST)
+        formset = QuestionFormset(request.POST)
+        if qcmform.is_valid() and formset.is_valid():
+            qcm = qcmform.save()
+            for form in formset:
+                question = form.save(commit=False)
+                question.id_qcm = qcm
+                question.save()
+            return render(request,'qcm/qcm.html')
+    return render(request, 'qcm/add_qcm.html', {
+        'qcmform': qcmform,
+        'formset': formset,
+    })
 
 
 def show_qcm(request):
@@ -21,9 +35,10 @@ def show_qcm(request):
     return render(request, "Qcm/qcm.html", context)
 
 def show_question(request, id):
-    question_objects = Question.objects.all().filter(qcm_id=id)
+    question_objects = Question.objects.all().filter(id_qcm=id)
     context = {
         'qcm': Qcm.objects.all().filter(id=id)[0],
         'question_objects': question_objects
     }
     return render(request, "Qcm/question.html", context)
+
