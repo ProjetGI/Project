@@ -1,0 +1,59 @@
+{% extends './../Base/UserBaseTemplate.html' %}
+
+{% block content %}
+    <br/>
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
+        <div class="card card-small qcm">
+
+        <div class="card-header border-bottom">
+        <h6 class="m-0">{{qcm.title}} <span class="text-muted" style="float:right">{{qcm.dateCreated}}</span> </h6>
+        </div>
+        <div class="card-body p-0">
+
+            <div class="blog-comments__item d-flex p-3">
+                <div class="qcm">
+                    <div class="qcm__description text-muted">
+                        {{qcm.description}}
+                    </div>                    
+                </div>            
+            </div>
+
+        {% for question in question_objects%} 
+            <div class="qcm-questiond-flex p-3">
+                <div class="qcm-question_choice">
+                    <!-- Checkboxes -->
+                    <strong class="text-secondary d-block mb-2">{{question.question}}</strong>
+                    <fieldset>
+                    <div class="custom-control custom-checkbox mb-1">
+                        <input type="checkbox" class="custom-control-input" id="q{{question.num}}-1">
+                        <label class="custom-control-label" for="q{{question.num}}-1">{{question.choice_1}}</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mb-1">
+                        <input type="checkbox" class="custom-control-input" id="q{{question.num}}-2">
+                        <label class="custom-control-label" for="q{{question.num}}-2">{{question.choice_2}}</label>
+                    </div>
+
+                    {% if  question.choice_3 %}
+                        <div class="custom-control custom-checkbox mb-1">
+                            <input type="checkbox" class="custom-control-input" id="q{{question.num}}-3">
+                            <label class="custom-control-label" for="q{{question.num}}-3">{{question.choice_3}}</label>
+                        </div>
+                    {% endif %}
+
+                    {% if  question.choice_4 %}
+                        <div class="custom-control custom-checkbox mb-1">
+                            <input type="checkbox" class="custom-control-input" id="q{{question.num}}-4">
+                            <label class="custom-control-label" for="q{{question.num}}-4">{{question.choice_4}}</label>
+                        </div>
+                    {% endif %}
+
+                    </fieldset>
+                    <!-- / Checkboxes -->
+                </div>
+            </div>        
+        {% endfor %}
+        </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends './../Base/UserBaseTemplate.html' %}
+
+{% block content %}
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
+        <div class="page-header row no-gutters py-4">
+            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <h3 class="page-title">Ajouter QCM</h3>
+            </div>
+        </div> 
+    
+        <div class="card card-small">
+        
+        <form class="form-horizontal" method="POST" action="">
+        {% csrf_token %}
+
+        <div class="card-header border-bottom">
+        <h6 class="m-0"> 
+            {{qcmform.title}}
+            </h6>
+        </div>
+
+        <div>
+        <ul class="list-group list-group-flush">          
+            <li class="list-group-item p-3 px-3 pt-3">
+                <div> 
+                    <Strong class="text-secondary mb-2">
+                        {{qcmform.description}}
+                    </Strong>
+                </div>
+            </li>
+
+        {{ formset.management_form }}
+        {% for form in formset %}
+
+        <li class="list-group-item p-3 px-3 pt-3 question">
+
+            <strong class="text-secondary d-block mb-2">
+                {{form.question}}    
+            </strong>
+        
+        <fieldset>
+            
+            <div class="custom-control custom-checkbox mb-2">
+                <input type="checkbox" class="custom-control-input" id="q`+question_number+`-1">
+                <label class="custom-control-label" for="q`+question_number+`-1">
+                    {{form.choice_1}}
+                </label>
+            </div>
+
+            <div class="custom-control custom-checkbox mb-2">
+                <input type="checkbox" class="custom-control-input" id="q`+question_number+`-2">
+                <label class="custom-control-label" for="q`+question_number+`-2">
+                    {{form.choice_2}}
+                </label>
+            </div>
+
+            <div class="custom-control custom-checkbox mb-2">
+                <input type="checkbox" class="custom-control-input" id="q`+question_number+`-3">
+                <label class="custom-control-label" for="q`+question_number+`-3">
+                    {{form.choice_3}}
+                </label>
+            </div>
+
+            <div class="custom-control custom-checkbox mb-2">
+                <input type="checkbox" class="custom-control-input" id="q`+question_number+`-4">
+                <label class="custom-control-label" for="q`+question_number+`-4">
+                    {{form.choice_4}}
+                </label>
+            </div>
+
+            <button type="button" class="btn btn-success add-question">
+                Ajouter une question
+            </button> 
+        </fieldset>
+       </li>
+       
+    
+    
+    {% endfor %}
+
+        <li class="list-group-item p-3 px-3 pt-3" id="add-question">
+            <button type="button" class="btn btn-danger" href="/qcm">
+                <span class="text-light">
+                </span> Annuler </button> 
+            <button type="submit" class="btn btn-primary" id="save">
+                <span class="text-light">
+                </span> Enregistrer</button> 
+        </li>
+    </ul>
+    </div>
+    </form>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block custom-scripts %}
+
+<script type='text/javascript'>
+function updateElementIndex(el, prefix, ndx) {
+    var id_regex = new RegExp('(' + prefix + '-\\d+)');
+    var replacement = prefix + '-' + ndx;
+    if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+    if (el.id) el.id = el.id.replace(id_regex, replacement);
+    if (el.name) el.name = el.name.replace(id_regex, replacement);
+}
+function cloneMore(selector, prefix) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    newElement.find(':input').each(function() {
+        var name = $(this).attr('name');
+        if(name) $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    total++;
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    var conditionRow = $('.question:not(:last)');
+    conditionRow.find('.btn.add-question')
+    .removeClass('btn-success').addClass('btn-danger')
+    .removeClass('add-question').addClass('remove-question')
+    .attr('style','outline:none')
+    .html('<span class="glyphicon glyphicon-minus" aria-hidden="true">Remove</span>');
+    return false;
+}
+function deleteForm(prefix, btn) {
+    var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+    if (total > 1){
+        btn.closest('.question').remove();
+        var forms = $('.question');
+        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+        for (var i=0, formCount=forms.length; i<formCount; i++) {
+            $(forms.get(i)).find(':input').each(function() {
+                updateElementIndex(this, prefix, i);
+            });
+        }
+    }
+    return false;
+}
+$(document).on('click', '.add-question', function(e){
+    e.preventDefault();
+    
+    cloneMore('.question:last', 'form');
+    return false;
+});
+$(document).on('click', '.remove-question', function(e){
+    e.preventDefault();
+    deleteForm('form', $(this));
+    return false;
+});
+</script>
+{% endblock custom-scripts %}
