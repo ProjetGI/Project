@@ -12,7 +12,7 @@ table{
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4 row">
       <div class="col-8 text-center text-sm-left mb-0">
-        <h3 class="page-title">Publication : {{ object }}</h3>
+        <!-- <h3 class="page-title">Publication : {{ object }}</h3> -->
       </div> 
       
 
@@ -21,10 +21,14 @@ table{
     <!-- Default Light Table -->
     <div>
     	
-	<form method="post">{% csrf_token %}
+	<!-- <form method="post">{% csrf_token %}
 	    <p>Are you sure you want to delete publication "{{ object }}"?</p>
 	    <input type="submit" value="Confirm">
-	</form>
+	</form> -->
+  <form method="post">{% csrf_token %}
+        <p style = "font-size:25px;" >Etes-vous sur de vouloir supprimer la publication "{{ object }}"?</p>
+        <input type="submit" value="Confirm" style="font-face: 'Comic Sans MS'; font-size: larger; color: white; background-color: orange; border: 3pt ridge lightgrey">
+  </form>
 
 
 
