@@ -28,13 +28,14 @@ class QcmModelForm(forms.ModelForm):
 
 QuestionFormset = modelformset_factory(
     Question,
-    fields=('question','choice_1','choice_2','choice_3','choice_4'),
+    fields=('question','choice_1','choice_2','choice_3','choice_4', 'answer'),
     labels = {
         'question': 'question',
         'choice_1': 'choix 1',
         'choice_2': 'choix 2',
         'choice_3': 'choix 3',
         'choice_4': 'choix 4',
+        'answer': 'answer',
     },
     extra=1,
     widgets = {
@@ -68,5 +69,12 @@ QuestionFormset = modelformset_factory(
                 'placeholder': 'Entrer le choix 4'
             }
         ),
+        'answer': forms.TextInput(
+            attrs ={
+                'class': 'answer',
+                'type': 'hidden',
+            }
+        ),
     }
+
 )

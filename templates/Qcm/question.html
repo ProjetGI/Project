@@ -25,30 +25,30 @@
                     <strong class="text-secondary d-block mb-2">{{question.question}}</strong>
                     <fieldset>
                     <div class="custom-control custom-checkbox mb-1">
-                        <input type="checkbox" class="custom-control-input" id="q{{question.num}}-1">
-                        <label class="custom-control-label" for="q{{question.num}}-1">{{question.choice_1}}</label>
+                        <input type="checkbox" class="custom-control-input" id="q{{question.id}}-1">
+                        <label class="custom-control-label" for="q{{question.id}}-1">{{question.choice_1}}</label>
                     </div>
                     <div class="custom-control custom-checkbox mb-1">
-                        <input type="checkbox" class="custom-control-input" id="q{{question.num}}-2">
-                        <label class="custom-control-label" for="q{{question.num}}-2">{{question.choice_2}}</label>
+                        <input type="checkbox" class="custom-control-input" id="q{{question.id}}-2">
+                        <label class="custom-control-label" for="q{{question.id}}-2">{{question.choice_2}}</label>
                     </div>
 
                     {% if  question.choice_3 %}
                         <div class="custom-control custom-checkbox mb-1">
-                            <input type="checkbox" class="custom-control-input" id="q{{question.num}}-3">
-                            <label class="custom-control-label" for="q{{question.num}}-3">{{question.choice_3}}</label>
+                            <input type="checkbox" class="custom-control-input" id="q{{question.id}}-3">
+                            <label class="custom-control-label" for="q{{question.id}}-3">{{question.choice_3}}</label>
                         </div>
                     {% endif %}
 
                     {% if  question.choice_4 %}
                         <div class="custom-control custom-checkbox mb-1">
-                            <input type="checkbox" class="custom-control-input" id="q{{question.num}}-4">
-                            <label class="custom-control-label" for="q{{question.num}}-4">{{question.choice_4}}</label>
+                            <input type="checkbox" class="custom-control-input" id="q{{question.id}}-4">
+                            <label class="custom-control-label" for="q{{question.id}}-4">{{question.choice_4}}</label>
                         </div>
                     {% endif %}
 
                     </fieldset>
-                    <!-- / Checkboxes -->
+                    
                 </div>
             </div>        
         {% endfor %}
@@ -57,3 +57,9 @@
     </div>
 
 {% endblock %}
+
+{% block custom-scripts %}
+<script type='text/javascript'>
+   
+</script>
+{% endblock custom-scripts %}

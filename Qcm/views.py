@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django import forms
 
 from .models import Qcm
 from .models import Question
@@ -10,7 +11,7 @@ from .forms import QuestionFormset
 def add_qcm(request):
     if request.method == 'GET':
         qcmform = QcmModelForm(request.GET or None)
-        formset = QuestionFormset(queryset=Qcm.objects.none())
+        formset = QuestionFormset(queryset=Question.objects.none())
     elif request.method =='POST':
         qcmform = QcmModelForm(request.POST)
         formset = QuestionFormset(request.POST)
@@ -20,7 +21,7 @@ def add_qcm(request):
                 question = form.save(commit=False)
                 question.id_qcm = qcm
                 question.save()
-            return render(request,'qcm/qcm.html')
+            return redirect('/qcm')
     return render(request, 'qcm/add_qcm.html', {
         'qcmform': qcmform,
         'formset': formset,

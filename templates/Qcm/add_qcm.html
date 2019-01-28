@@ -41,33 +41,33 @@
         <fieldset>
             
             <div class="custom-control custom-checkbox mb-2">
-                <input type="checkbox" class="custom-control-input" id="q`+question_number+`-1">
-                <label class="custom-control-label" for="q`+question_number+`-1">
+                <input type="checkbox" class="custom-control-input" id="checkbox-0-1">
+                <label class="custom-control-label" for="checkbox-0-1">
                     {{form.choice_1}}
                 </label>
             </div>
 
             <div class="custom-control custom-checkbox mb-2">
-                <input type="checkbox" class="custom-control-input" id="q`+question_number+`-2">
-                <label class="custom-control-label" for="q`+question_number+`-2">
+                <input type="checkbox" class="custom-control-input" id="checkbox-0-2">
+                <label class="custom-control-label" for="checkbox-0-2">
                     {{form.choice_2}}
                 </label>
             </div>
 
             <div class="custom-control custom-checkbox mb-2">
-                <input type="checkbox" class="custom-control-input" id="q`+question_number+`-3">
-                <label class="custom-control-label" for="q`+question_number+`-3">
+                <input type="checkbox" class="custom-control-input" id="checkbox-0-3">
+                <label class="custom-control-label" for="checkbox-0-3">
                     {{form.choice_3}}
                 </label>
             </div>
 
             <div class="custom-control custom-checkbox mb-2">
-                <input type="checkbox" class="custom-control-input" id="q`+question_number+`-4">
-                <label class="custom-control-label" for="q`+question_number+`-4">
+                <input type="checkbox" class="custom-control-input" id="checkbox-0-4">
+                <label class="custom-control-label" for="checkbox-0-4">
                     {{form.choice_4}}
                 </label>
             </div>
-
+            {{form.answer}}
             <button type="button" class="btn btn-success add-question">
                 Ajouter une question
             </button> 
@@ -78,11 +78,11 @@
     
     {% endfor %}
 
-        <li class="list-group-item p-3 px-3 pt-3" id="add-question">
+        <li class="list-group-item p-3 px-3 pt-3">
             <button type="button" class="btn btn-danger" href="/qcm">
                 <span class="text-light">
                 </span> Annuler </button> 
-            <button type="submit" class="btn btn-primary" id="save">
+            <button type="submit" class="btn btn-primary">
                 <span class="text-light">
                 </span> Enregistrer</button> 
         </li>
@@ -113,6 +113,19 @@ function cloneMore(selector, prefix) {
         var id = 'id_' + name;
         $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
     });
+
+    newElement.find(':input[type=checkbox]').each(function(i) {
+        var id = "checkbox-"+total+"-"+(i+1);
+        $(this).attr({'id': id}).val('').prop("checked", false);
+        var nextlable = $(this).next('label');
+        if(nextlable) nextlable.attr({'for':id});
+    });
+
+    newElement.find('.answer').each(function() {
+        var name = "form-"+total+"-answer";
+        $(this).attr({'name':name,'id': 'id_'+name}).val('').prop("checked", false);
+    });
+    
     total++;
     $('#id_' + prefix + '-TOTAL_FORMS').val(total);
     $(selector).after(newElement);
@@ -138,12 +151,30 @@ function deleteForm(prefix, btn) {
     }
     return false;
 }
+
+$(document).on('change', 'input[type=checkbox]', function(){
+    var idpattern = /\d+/g;
+    var choice = $(this).attr('id').match(idpattern)[1]
+    var selector = "#id_form-" + $(this).attr('id').match(idpattern)[0] + "-answer";
+    var value = $(selector).val();
+
+    if(this.checked){
+        value+=choice
+
+    }
+    else{
+        var id_regex = new RegExp(choice);
+        value = value.replace(id_regex,'')
+    }
+    $(selector).val(value);    
+});
+
 $(document).on('click', '.add-question', function(e){
     e.preventDefault();
-    
     cloneMore('.question:last', 'form');
     return false;
 });
+
 $(document).on('click', '.remove-question', function(e){
     e.preventDefault();
     deleteForm('form', $(this));

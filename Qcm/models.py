@@ -13,5 +13,6 @@ class Question(models.Model):
     question = models.TextField()
     choice_1 = models.CharField(max_length=150)
     choice_2 = models.CharField(max_length=150)
-    choice_3 = models.CharField(max_length=150)
-    choice_4 = models.CharField(max_length=150)
+    choice_3 = models.CharField(max_length=150, blank=True)
+    choice_4 = models.CharField(max_length=150, blank=True)
+    answer = models.CharField(max_length=4)
